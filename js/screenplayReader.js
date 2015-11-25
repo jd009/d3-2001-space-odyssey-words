@@ -16,8 +16,10 @@ $(document).ready(function(){
         .attr('height', '100%')
         .attr('fill', 'black');
 
-    var svgWidth = $('#svg_vis').css('width').replace(/[^-\d\.]/g, '');
-    var svgHeight = $('#svg_vis').css('height').replace(/[^-\d\.]/g, '');
+    var regexNonNumerical = /[^-\d\.]/g;
+    var emptyStr = '';
+    var svgWidth = $('#svg_vis').css('width').replace(regexNonNumerical, emptyStr);
+    var svgHeight = $('#svg_vis').css('height').replace(regexNonNumerical, emptyStr);
     for(var i = 0; i < 100; i++){
       svg.append('circle')
         .attr('r', '1')
@@ -105,10 +107,12 @@ $(document).ready(function(){
 
   function showRandomSentence(element, data, index){
     var focusedWord = element.getAttribute('data-text');
+    var startSentenceUntilWordBoundary = '[^\\.;\\?\\!-]*(\\b';
+    var afterWordBoundaryUntilEndSentence = '\\b)[^\\.;\\?\\!-]*';
     var regularExpressionStr =
-      '[^\\.;\\?\\!-]*(\\b' +
+      startSentenceUntilWordBoundary +
       focusedWord +
-      '\\b)[^\\.;\\?\\!-]*';
+      afterWordBoundaryUntilEndSentence;
 
     var regex = new RegExp(regularExpressionStr, 'gi');
     var screenplay = $('#screenplayHoldingArea').text();
