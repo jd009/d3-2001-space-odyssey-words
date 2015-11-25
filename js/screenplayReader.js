@@ -8,13 +8,13 @@ $(document).ready(function(){
     var topWordsCutoffIndex = 16;
     words = words.slice(numberOneIndex, topWordsCutoffIndex);
 
-    var svg = d3.select("#graph").append("svg")
-                .attr("id", "svg_vis");
+    var svg = d3.select('#graph').append('svg')
+                .attr('id', 'svg_vis');
 
-    svg.append("rect")
-        .attr("width", "100%")
-        .attr("height", "100%")
-        .attr("fill", "black");
+    svg.append('rect')
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .attr('fill', 'black');
 
     var svgWidth = $('#svg_vis').css('width').replace(/[^-\d\.]/g, '');
     var svgHeight = $('#svg_vis').css('height').replace(/[^-\d\.]/g, '');
@@ -43,19 +43,19 @@ $(document).ready(function(){
       wordNodes.push(wordNode);
     })
 
-    var circles = svg.selectAll(".wordBubble")
+    var circles = svg.selectAll('.wordBubble')
                     .data(wordNodes, function(node){return node.wordString;});
 
-    circles.enter().append("circle")
+    circles.enter().append('circle')
       .attr('class', 'wordBubble')
-      .attr("r", function(node){ return node.radius; })
-      .attr("stroke", "black")
-      .attr("stroke-width", 3)
-      .attr("fill", function(node, index){
+      .attr('r', function(node){ return node.radius; })
+      .attr('stroke', 'black')
+      .attr('stroke-width', 3)
+      .attr('fill', function(node, index){
                       if(index % 2 === 0){
-                        return "#5973B2";
+                        return '#5973B2';
                       } else {
-                        return "#394c7a";
+                        return '#394c7a';
                       }
                     });
 
@@ -78,8 +78,8 @@ $(document).ready(function(){
                             node.x = node.x + (centerX - node.x) * (damper + 0.02) * e.alpha;
                             node.y = node.y + (centerY - node.y) * (damper + 0.02) * e.alpha;
                           })
-                          .attr("cx", function(node){ return node.x; })
-                          .attr("cy", function(node){ return node.y; });
+                          .attr('cx', function(node){ return node.x; })
+                          .attr('cy', function(node){ return node.y; });
                         });
 
     forceLayout.on('end', function(){
@@ -121,7 +121,7 @@ $(document).ready(function(){
 
     var randomIndex = Math.floor(Math.random()*matches.length);
     var randomSentenceStr = matches[randomIndex];
-    randomSentenceStr = randomSentenceStr.replace(/(\r\n|\n|\r)/gm,"");
+    randomSentenceStr = randomSentenceStr.replace(/(\r\n|\n|\r)/gm,'');
     randomSentenceStr = randomSentenceStr.replace(/\s\s+/g, ' ');
     $('#randomSentenceTextArea').css('background-color', 'black');
     $('#randomSentenceTextArea').val(randomSentenceStr);
