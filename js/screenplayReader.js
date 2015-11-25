@@ -125,8 +125,14 @@ $(document).ready(function(){
 
     var randomIndex = Math.floor(Math.random()*matches.length);
     var randomSentenceStr = matches[randomIndex];
-    randomSentenceStr = randomSentenceStr.replace(/(\r\n|\n|\r)/gm,'');
-    randomSentenceStr = randomSentenceStr.replace(/\s\s+/g, ' ');
+
+    var lineEndings = /(\r\n|\n|\r)/gm;
+    var emptyStr = '';
+    randomSentenceStr = randomSentenceStr.replace(lineEndings, emptyStr);
+
+    var multipleSpaces = /\s\s+/g;
+    var singleSpace = ' ';
+    randomSentenceStr = randomSentenceStr.replace(multipleSpaces, singleSpace);
     $('#randomSentenceTextArea').css('background-color', 'black');
     $('#randomSentenceTextArea').val(randomSentenceStr);
   }
