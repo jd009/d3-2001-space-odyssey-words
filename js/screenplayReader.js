@@ -12,9 +12,7 @@ $(document).ready(function(){
                 .attr('id', 'svg_vis');
 
     svg.append('rect')
-        .attr('width', '100%')
-        .attr('height', '100%')
-        .attr('fill', 'black');
+        .attr('class', 'svgBackground');
 
     var regexNonNumerical = /[^-\d\.]/g;
     var emptyStr = '';
@@ -141,7 +139,4 @@ $(document).ready(function(){
     $('#randomSentenceTextArea').css('background-color', 'gray');
     $('#randomSentenceTextArea').val('Hover over a word for a random example of its usage...');
   }
-//https://www.palantir.net/2001/script.html
-//http://iamnotagoodartist.com/web/quick-and-dirty-word-frequency-analysis-with-javascript/
-//https://gist.github.com/rocktronica/2625413#file-wordfrequency-js
 });
