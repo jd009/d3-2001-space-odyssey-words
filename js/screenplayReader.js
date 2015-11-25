@@ -14,15 +14,11 @@ $(document).ready(function(){
     svg.append('rect')
        .attr('class', 'svgBackground');
 
-    var regexNonNumerical = /[^-\d\.]/g;
-    var emptyStr = '';
-    var svgWidth = $('#svg_vis').css('width').replace(regexNonNumerical, emptyStr);
-    var svgHeight = $('#svg_vis').css('height').replace(regexNonNumerical, emptyStr);
     for(var stars = 0, numStars = 100; stars < numStars; stars++){
       svg.append('circle')
         .attr('class', 'stars')
-        .attr('cx', Math.random() * svgWidth)
-        .attr('cy', Math.random() * svgHeight);
+        .attr('cx', randomXPosition())
+        .attr('cy', randomYPosition());
     }
 
     var maxFrequency = d3.max(words, function(word){ return word.frequency; });
@@ -36,8 +32,8 @@ $(document).ready(function(){
         wordString: word.text,
         radius: radiusScale(word.frequency),
         frequency: word.frequency,
-        x: Math.random() * svgWidth,
-        y: Math.random() * svgHeight
+        x: randomXPosition(),
+        y: randomYPosition()
       };
       wordNodes.push(wordNode);
     })
@@ -55,7 +51,7 @@ $(document).ready(function(){
 
     var forceLayout = d3.layout.force()
                         .nodes(wordNodes)
-                        .size([svgWidth, svgHeight])
+                        .size([getSvgWidth(), getSvgHeight()])
                         .gravity(0.001)
                         .charge(function(node){
                           var radius = radiusScale(node.frequency);
@@ -66,8 +62,8 @@ $(document).ready(function(){
                         .alpha(0.0001)
                         .on('tick', function(e){
                           circles.each(function(node, i){
-                            var centerX = svgWidth / 2;
-                            var centerY = svgHeight / 2;
+                            var centerX = getCenterX();
+                            var centerY = getCenterY();
                             var damper = 0.1;
                             node.x = node.x + (centerX - node.x) * (damper + 0.02) * e.alpha;
                             node.y = node.y + (centerY - node.y) * (damper + 0.02) * e.alpha;
@@ -140,5 +136,37 @@ $(document).ready(function(){
     } else {
       return '#394c7a';
     }
+  }
+
+  function getSvgWidth(){
+    var regexNonNumerical = /[^-\d\.]/g;
+    var emptyStr = '';
+    var svgWidth = $('#svg_vis').css('width').replace(regexNonNumerical, emptyStr);
+    return svgWidth;
+  }
+
+  function getSvgHeight(){
+    var regexNonNumerical = /[^-\d\.]/g;
+    var emptyStr = '';
+    var svgHeight = $('#svg_vis').css('height').replace(regexNonNumerical, emptyStr);
+    return svgHeight;
+  }
+
+  function randomXPosition(){
+    return Math.random() * getSvgWidth();
+  }
+
+  function randomYPosition(){
+    return Math.random() * getSvgHeight();
+  }
+
+  function getCenterX(){
+    var svgWidth = getSvgWidth();
+    return svgWidth / 2;
+  }
+
+  function getCenterY(){
+    var svgHeight = getSvgHeight();
+    return svgHeight / 2;
   }
 });
