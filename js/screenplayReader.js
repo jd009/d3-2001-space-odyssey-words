@@ -14,18 +14,7 @@ $(document).ready(function(){
 
     var radiusScale = createRadiusScale(words);
 
-    var wordNodes = [];
-
-    words.forEach(function(word){
-      var wordNode = {
-        wordString: word.text,
-        radius: radiusScale(word.frequency),
-        frequency: word.frequency,
-        x: randomXPosition(),
-        y: randomYPosition()
-      };
-      wordNodes.push(wordNode);
-    })
+    var wordNodes = wrapInNodes(words, radiusScale);
 
     var circles = svg.selectAll('.wordBubble')
                     .data(wordNodes, function(node){return node.wordString;})
@@ -36,7 +25,6 @@ $(document).ready(function(){
                     .attr('stroke', 'black')
                     .attr('stroke-width', 3)
                     .attr('fill', varyColorByIndex);
-
 
     var forceLayout = d3.layout.force()
                         .nodes(wordNodes)
@@ -190,5 +178,22 @@ $(document).ready(function(){
   function getCenterY(){
     var svgHeight = getSvgHeight();
     return svgHeight / 2;
+  }
+
+  function wrapInNodes(words, radiusScale){
+    var nodes = [];
+
+    words.forEach(function(word){
+      var wordNode = {
+        wordString: word.text,
+        radius: radiusScale(word.frequency),
+        frequency: word.frequency,
+        x: randomXPosition(),
+        y: randomYPosition()
+      };
+      nodes.push(wordNode);
+    });
+
+    return nodes;
   }
 });
