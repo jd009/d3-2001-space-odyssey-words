@@ -51,13 +51,7 @@ $(document).ready(function(){
                     .attr('r', function(node){ return node.radius; })
                     .attr('stroke', 'black')
                     .attr('stroke-width', 3)
-                    .attr('fill', function(node, index){
-                                    if(index % 2 === 0){
-                                      return '#5973B2';
-                                    } else {
-                                      return '#394c7a';
-                                    }
-                                  });
+                    .attr('fill', varyColorByIndex);
 
 
     var forceLayout = d3.layout.force()
@@ -139,5 +133,13 @@ $(document).ready(function(){
   function hideRandomSentence(data, index){
     $('#randomSentenceTextArea').css('background-color', 'gray');
     $('#randomSentenceTextArea').val('Hover over a word for a random example of its usage...');
+  }
+
+  function varyColorByIndex(data, index){
+    if(index % 2 === 0){
+      return '#5973B2';
+    } else {
+      return '#394c7a';
+    }
   }
 });
