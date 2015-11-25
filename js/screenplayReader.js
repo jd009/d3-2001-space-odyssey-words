@@ -1,29 +1,18 @@
 $(document).ready(function(){
-  var screenplayHoldingArea = $('#screenplayHoldingArea');
-  processWordFrequency(screenplayHoldingArea.text())
+  var screenplay = $('#screenplayHoldingArea').text();
+  processWordFrequency(screenplay);
 
   function processWordFrequency(screenplay){
     var words = calculateWordFrequency(screenplay);
-    var numberOneIndex = 0;
-    var topWordsCutoffIndex = 16;
-    words = words.slice(numberOneIndex, topWordsCutoffIndex);
+    words = reduceToTopWords(words);
 
-    var svg = d3.select('#graph').append('svg')
-                .attr('id', 'svg_vis');
+    var svg = createSVG();
 
-    svg.append('rect')
-       .attr('class', 'svgBackground');
+    addBackground(svg);
 
-    for(var stars = 0, numStars = 100; stars < numStars; stars++){
-      svg.append('circle')
-        .attr('class', 'stars')
-        .attr('cx', randomXPosition())
-        .attr('cy', randomYPosition());
-    }
+    createStars(svg);
 
-    var maxFrequency = d3.max(words, function(word){ return word.frequency; });
-    var minFrequency = d3.min(words, function(word){ return word.frequency; });
-    var radiusScale = d3.scale.sqrt().domain([minFrequency, maxFrequency]).range([10, 70]);
+    var radiusScale = createRadiusScale(words);
 
     var wordNodes = [];
 
@@ -130,11 +119,44 @@ $(document).ready(function(){
     $('#randomSentenceTextArea').val('Hover over a word for a random example of its usage...');
   }
 
+  function reduceToTopWords(words){
+    var numberOneIndex = 0;
+    var topWordsCutoffIndex = 16;
+    return words.slice(numberOneIndex, topWordsCutoffIndex);
+  }
+
   function varyColorByIndex(data, index){
     if(index % 2 === 0){
       return '#5973B2';
     } else {
       return '#394c7a';
+    }
+  }
+
+  function createRadiusScale(words){
+    var maxFrequency = d3.max(words, function(word){ return word.frequency; });
+    var minFrequency = d3.min(words, function(word){ return word.frequency; });
+    var minRadius = 10;
+    var maxRadius = 70;
+    return d3.scale.sqrt().domain([minFrequency, maxFrequency]).range([minRadius, maxRadius]);
+  }
+
+  function createSVG(){
+    return d3.select('#graph').append('svg')
+             .attr('id', 'svg_vis');
+  }
+
+  function addBackground(svg){
+    svg.append('rect')
+       .attr('class', 'svgBackground');
+  }
+
+  function createStars(svg){
+    for(var stars = 0, numStars = 100; stars < numStars; stars++){
+      svg.append('circle')
+        .attr('class', 'stars')
+        .attr('cx', randomXPosition())
+        .attr('cy', randomYPosition());
     }
   }
 
