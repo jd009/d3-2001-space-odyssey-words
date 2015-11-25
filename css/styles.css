@@ -1,0 +1,61 @@
+#mainDiv {
+  position: absolute;
+  width: 1125px;
+  margin: 0 auto;
+}
+
+#headingDiv {
+  background-color: black;
+}
+
+.heading {
+  font-family: 'Gill Sans';
+  font-weight: lighter;
+  font-size: 3em;
+  color: white;
+  text-align: center;
+  padding: 4px;
+  margin: 3px;
+  margin-bottom: 0px;
+}
+
+.mainHeading {
+  font-size: 4em;
+  padding-bottom: 1px;
+}
+
+#graph {
+  position: relative;
+  margin: 0 auto;
+}
+
+#svg_vis {
+  display: block;
+  position: relative;
+}
+
+#randomSentenceTextArea {
+  resize: none;
+  width: 1116px;
+  height: 40px;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: white;
+  background-color: gray;
+  border: 3px solid black;
+  padding-left: 3px;
+  padding-right: 0px;
+}
+
+#screenplayHoldingArea {
+  display: none;
+  position: relative;
+  margin: 0 auto;
+  left: 25%;
+}
+
+.label {
+  font-family: Helvetica;
+  font-size: 12px;
+  font-weight: lighter;
+}
