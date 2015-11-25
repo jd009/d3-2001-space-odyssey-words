@@ -44,20 +44,21 @@ $(document).ready(function(){
     })
 
     var circles = svg.selectAll('.wordBubble')
-                    .data(wordNodes, function(node){return node.wordString;});
+                    .data(wordNodes, function(node){return node.wordString;})
+                    .enter()
+                    .append('circle')
+                    .attr('class', 'wordBubble')
+                    .attr('r', function(node){ return node.radius; })
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', 3)
+                    .attr('fill', function(node, index){
+                                    if(index % 2 === 0){
+                                      return '#5973B2';
+                                    } else {
+                                      return '#394c7a';
+                                    }
+                                  });
 
-    circles.enter().append('circle')
-      .attr('class', 'wordBubble')
-      .attr('r', function(node){ return node.radius; })
-      .attr('stroke', 'black')
-      .attr('stroke-width', 3)
-      .attr('fill', function(node, index){
-                      if(index % 2 === 0){
-                        return '#5973B2';
-                      } else {
-                        return '#394c7a';
-                      }
-                    });
 
     var forceLayout = d3.layout.force()
                         .nodes(wordNodes)
