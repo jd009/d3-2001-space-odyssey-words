@@ -12,18 +12,17 @@ $(document).ready(function(){
                 .attr('id', 'svg_vis');
 
     svg.append('rect')
-        .attr('class', 'svgBackground');
+       .attr('class', 'svgBackground');
 
     var regexNonNumerical = /[^-\d\.]/g;
     var emptyStr = '';
     var svgWidth = $('#svg_vis').css('width').replace(regexNonNumerical, emptyStr);
     var svgHeight = $('#svg_vis').css('height').replace(regexNonNumerical, emptyStr);
-    for(var i = 0; i < 100; i++){
+    for(var stars = 0, numStars = 100; stars < numStars; stars++){
       svg.append('circle')
-        .attr('r', '1')
+        .attr('class', 'stars')
         .attr('cx', Math.random() * svgWidth)
-        .attr('cy', Math.random() * svgHeight)
-        .attr('fill', 'white');
+        .attr('cy', Math.random() * svgHeight);
     }
 
     var maxFrequency = d3.max(words, function(word){ return word.frequency; });

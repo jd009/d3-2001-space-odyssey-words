@@ -42,6 +42,11 @@
   fill: black;
 }
 
+.stars {
+  r: 1;
+  fill: white;
+}
+
 #randomSentenceTextArea {
   resize: none;
   width: 1116px;
