@@ -32,6 +32,8 @@
 #svg_vis {
   display: block;
   position: relative;
+  width: 1125px;
+  height: 500px;
 }
 
 #randomSentenceTextArea {

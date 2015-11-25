@@ -8,12 +8,7 @@ $(document).ready(function(){
     var topWordsCutoffIndex = 16;
     words = words.slice(numberOneIndex, topWordsCutoffIndex);
 
-    var width = 1125;
-    var height = 500;
-
     var svg = d3.select("#graph").append("svg")
-                .attr("width", width)
-                .attr("height", height)
                 .attr("id", "svg_vis");
 
     svg.append("rect")
@@ -21,11 +16,13 @@ $(document).ready(function(){
         .attr("height", "100%")
         .attr("fill", "black");
 
+    var svgWidth = $('#svg_vis').css('width').replace(/[^-\d\.]/g, '');
+    var svgHeight = $('#svg_vis').css('height').replace(/[^-\d\.]/g, '');
     for(var i = 0; i < 100; i++){
       svg.append('circle')
         .attr('r', '1')
-        .attr('cx', Math.random() * width)
-        .attr('cy', Math.random() * height)
+        .attr('cx', Math.random() * svgWidth)
+        .attr('cy', Math.random() * svgHeight)
         .attr('fill', 'white');
     }
 
@@ -40,8 +37,8 @@ $(document).ready(function(){
         wordString: word.text,
         radius: radiusScale(word.frequency),
         frequency: word.frequency,
-        x: Math.random() * width,
-        y: Math.random() * height
+        x: Math.random() * svgWidth,
+        y: Math.random() * svgHeight
       };
       wordNodes.push(wordNode);
     })
@@ -64,7 +61,7 @@ $(document).ready(function(){
 
     var forceLayout = d3.layout.force()
                         .nodes(wordNodes)
-                        .size([width, height])
+                        .size([svgWidth, svgHeight])
                         .gravity(0.001)
                         .charge(function(node){
                           var radius = radiusScale(node.frequency);
@@ -75,8 +72,8 @@ $(document).ready(function(){
                         .alpha(0.0001)
                         .on('tick', function(e){
                           circles.each(function(node, i){
-                            var centerX = width / 2;
-                            var centerY = height / 2;
+                            var centerX = svgWidth / 2;
+                            var centerY = svgHeight / 2;
                             var damper = 0.1;
                             node.x = node.x + (centerX - node.x) * (damper + 0.02) * e.alpha;
                             node.y = node.y + (centerY - node.y) * (damper + 0.02) * e.alpha;
