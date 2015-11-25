@@ -1,13 +1,12 @@
 $(document).ready(function(){
-  var fileInput = $('#fileInput');
   var screenplayHoldingArea = $('#screenplayHoldingArea');
-  processScreenplay(screenplayHoldingArea.text())
+  processWordFrequency(screenplayHoldingArea.text())
 
-  function processScreenplay(string){
-    var words = calculateWordFrequency(string);
-    var l = words.length;
-    printWordFrequency(words);
-    words = words.slice(0, 16);
+  function processWordFrequency(screenplay){
+    var words = calculateWordFrequency(screenplay);
+    var numberOneIndex = 0;
+    var topWordsCutoffIndex = 16;
+    words = words.slice(numberOneIndex, topWordsCutoffIndex);
 
     var width = 1125;
     var height = 500;
